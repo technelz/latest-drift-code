@@ -1,0 +1,35 @@
+{
+  "source": {
+    "profile": "prod",
+    "region": "us-west-2",
+    "vpc_id": "vpc-prod"
+  },
+  "target": {
+    "profile": "dr",
+    "region": "us-east-1",
+    "vpc_id": "vpc-dr"
+  },
+  "mappings": {
+    "subnets": {},
+    "security_groups": {},
+    "certificates": {},
+    "load_balancers": {},
+    "target_groups": {}
+  },
+  "policy": {
+    "register_targets": false,
+    "create_missing_load_balancers": true,
+    "create_missing_target_groups": true,
+    "sync_load_balancer_attributes": true,
+    "sync_target_group_attributes": true,
+    "sync_target_group_settings": true,
+    "sync_listener_rules": true,
+    "sync_listeners": true,
+    "sync_tags": true,
+    "allow_extra_target_rules": true,
+    "skip_target_registration": true,
+    "allow_certificate_domain_match": true,
+    "auto_map_subnets": true,
+    "auto_map_security_groups": true
+  }
+}
