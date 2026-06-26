@@ -1,0 +1,70 @@
+ELBv2 DR RECONCILIATION – HUMAN READABLE REPORT
+======================================================================
+Created: 2026-05-28T13:34:56.644906+00:00
+
+EXECUTIVE SUMMARY
+----------------------------------------------------------------------
+Target Groups: 8/8 in sync
+Load Balancers: 1/8 in sync
+Listeners: 3/8 in sync
+Manual Review Required: 2
+Ambiguous Matches: 0
+Unmatched Resources: 0
+
+TARGET GROUPS
+----------------------------------------------------------------------
+CADBO-PRD-DHCS-NLB-TG443-Ext             OK
+CADBO-PRD-DHCS-TG443-Int                 OK
+CADBO-PRD-EIMS-TG443                     OK
+CADBO-PRD-ESST-TG443                     OK
+CADBO-PRD-INTF-TG443                     OK
+CADBO-PRD-SMCA-NLB-TG443-Ext             OK
+CADBO-PRD-SMCA-TG443-Int-V2              OK
+cadbo-prd-cladju-tg8000                  OK
+
+LOAD BALANCER DRIFT
+----------------------------------------------------------------------
+CADBO-PRD-DHCS-ALB-Int – UPDATE
+  • attribute.idle_timeout.timeout_seconds: 600 → 60
+
+CADBO-PRD-DHCS-NLB-Ext – UPDATE
+  • attribute.load_balancing.cross_zone.enabled: true → false
+
+CADBO-PRD-EIMS-ALB-Int – UPDATE
+  • tag.CostCenter: C.000060.02.03.50.01.01 → None
+  • tag.Owner: DBO-FI → None
+
+CADBO-PRD-ESST-ALB-Int – UPDATE
+  • attribute.routing.http2.enabled: false → true
+
+CADBO-PRD-INTF-ALB-Int – UPDATE
+  • tag.Environment: prd → non-prod
+  • tag.Owner: DBO → None
+
+CADBO-PRD-SMCA-ALB-Int – UPDATE
+  • tag.Environment: prd → None
+  • tag.Name: CADBO-PRD-SMCA-ALB-Int → None
+
+cadbo-prd-cladju-alb-int – UPDATE
+  • attribute.idle_timeout.timeout_seconds: 600 → 60
+
+
+LISTENER DRIFT
+----------------------------------------------------------------------
+HTTPS:443 – UPDATE
+  • DefaultActions: [{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}] → [{'ForwardConfig': {'TargetGroupStickinessConfig': {'DurationSeconds': 3600, 'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+HTTPS:443 – UPDATE
+  • DefaultActions: [{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}] → [{'ForwardConfig': {'TargetGroupStickinessConfig': {'DurationSeconds': 3600, 'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-2021-06 → ELBSecurityPolicy-TLS13-1-2-2021-06
+  Note: No DR ACM certificate match for source cert arn:aws:acm:us-west-2:480155374417:certificate/d0256f43-ba71-4279-ad5a-4136a04d9015
+
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-2021-06 → ELBSecurityPolicy-TLS13-1-2-Res-2021-06
+  Note: No DR ACM certificate match for source cert arn:aws:acm:us-west-2:480155374417:certificate/b93744c7-2690-44d5-9637-b60b8ce4efe8
+
+TCP:443 – UPDATE
+  • DefaultActions: [{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{}]}, 'Type': 'forward'}] → [{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+

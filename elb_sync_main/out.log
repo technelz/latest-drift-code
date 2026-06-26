@@ -1,0 +1,102 @@
+
+============================================================
+ Enterprise AWS ELBv2 DR Routing Reconciliation Engine
+============================================================
+[SOURCE] profile=default, region=us-west-2, vpc=vpc-01702476897c99f76
+[TARGET] profile=dr-ark, region=us-east-1, vpc=vpc-05431353c17b2646f
+[MODE] dry_run=False, report_only=False, yes=True
+[POLICY] {"allow_certificate_domain_match": true, "allow_extra_target_rules": true, "create_missing_load_balancers": false, "create_missing_target_groups": true, "register_targets": false, "skip_target_registration": true, "sync_listener_rules": true, "sync_listeners": true, "sync_load_balancer_attributes": true, "sync_tags": true, "sync_target_group_attributes": true, "sync_target_group_settings": true}
+[INFO] Discovering source ELBv2 world
+[SOURCE] LBs=20, listeners=24, rules=0, TGs=26, certs=2
+[INFO] Discovering target ELBv2 world
+[TARGET] LBs=19, listeners=24, rules=0, TGs=31, certs=2
+
+====================================================================================================
+ELBV2 DR ROUTING RECONCILIATION REPORT
+====================================================================================================
+target_groups_total                 : 26
+target_groups_in_sync               : 26
+target_groups_create                : 0
+target_groups_update                : 0
+target_groups_manual_review         : 0
+load_balancers_total                : 20
+load_balancers_in_sync              : 14
+listeners_total                     : 18
+listeners_in_sync                   : 16
+listener_rules_total                : 0
+listener_rules_in_sync              : 0
+create_total                        : 0
+update_total                        : 2
+manual_review_total                 : 6
+ambiguous_matches                   : 0
+unmatched_resources                 : 6
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: ALB-ALM-Prod
+Action     : MANUAL_REVIEW
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: ALB-PPM-Prod
+Action     : MANUAL_REVIEW
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: ALB-Rlink-Prod
+Action     : MANUAL_REVIEW
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: NLB-ALM-Prod
+Action     : MANUAL_REVIEW
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: NLB-PPM-Prod
+Action     : MANUAL_REVIEW
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: NLB-Rlink-Prod
+Action     : MANUAL_REVIEW
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LISTENER: HTTPS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS-1-2-Ext-2018-06'
+  - DefaultActions: source=[{'ForwardConfig': {'TargetGroupStickinessConfig': {'DurationSeconds': 3600, 'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}], target=[{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+----------------------------------------------------------------------------------------------------
+LISTENER: TLS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS-1-2-2017-01'
+====================================================================================================
+
+================ ELBV2 EXECUTION START ================
+================ ELBV2 EXECUTION COMPLETE ================
+
+
+================ POST-APPLY VALIDATION START ================
+[POST-APPLY-VALIDATION] status=FAILED, create=0, update=2, manual_review=6, ambiguous=0
+================ POST-APPLY VALIDATION COMPLETE ================
+
+[REPORT] Written: elbv2_reports\elbv2_reconcile_apply_dr-ark_us-east-1_20260625_183318.json
+[REPORT] Human-readable report written: elbv2_reports\elbv2_reconcile_apply_dr-ark_us-east-1_20260625_183318.txt
+[DONE] ELBv2 DR routing reconciliation complete.

@@ -1,0 +1,685 @@
+{
+  "created_at_utc": "2026-05-28T14:48:17.622574+00:00",
+  "mode": {
+    "dry_run": true,
+    "report_only": false,
+    "yes": false
+  },
+  "source": {
+    "profile": "default",
+    "region": "us-west-2",
+    "vpc_id": "vpc-03ee9c7eb53a70f6c",
+    "account_id": null,
+    "role_arn": null
+  },
+  "target": {
+    "profile": "dr-cadbo",
+    "region": "us-east-1",
+    "vpc_id": "vpc-07960651bc9c19fa5",
+    "account_id": null,
+    "role_arn": null
+  },
+  "effective_policy": {
+    "register_targets": false,
+    "create_missing_load_balancers": false,
+    "create_missing_target_groups": true,
+    "sync_load_balancer_attributes": true,
+    "sync_target_group_attributes": true,
+    "sync_target_group_settings": true,
+    "sync_listener_rules": true,
+    "sync_listeners": true,
+    "sync_tags": true,
+    "allow_extra_target_rules": true,
+    "skip_target_registration": true,
+    "allow_certificate_domain_match": true
+  },
+  "discovery_counts": {
+    "source": {
+      "load_balancers": 8,
+      "listeners": 8,
+      "listener_rules": 0,
+      "target_groups": 8,
+      "certificates": 9
+    },
+    "target": {
+      "load_balancers": 10,
+      "listeners": 10,
+      "listener_rules": 0,
+      "target_groups": 16,
+      "certificates": 7
+    }
+  },
+  "summary": {
+    "target_groups_total": 8,
+    "target_groups_in_sync": 8,
+    "target_groups_create": 0,
+    "target_groups_update": 0,
+    "target_groups_manual_review": 0,
+    "load_balancers_total": 8,
+    "load_balancers_in_sync": 1,
+    "listeners_total": 8,
+    "listeners_in_sync": 3,
+    "listener_rules_total": 0,
+    "listener_rules_in_sync": 0,
+    "create_total": 0,
+    "update_total": 10,
+    "manual_review_total": 2,
+    "ambiguous_matches": 0,
+    "unmatched_resources": 0
+  },
+  "matches": {
+    "tg_source_to_target_arn": {
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-DHCS-NLB-TG443-Ext/ea12b0c26a07fe8c": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-DHCS-NLB-TG443-Ext/299b7652f0b45b6e",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-DHCS-TG443-Int/7a41b7e363307622": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-DHCS-TG443-Int/ba612cb5c45020e5",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-EIMS-TG443/c42ef1e0be6f64b9": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-EIMS-TG443/2029362ee1747702",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-ESST-TG443/759398575f22eb6b": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-ESST-TG443/374007c210292af7",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-INTF-TG443/c3be9d6230a45810": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-INTF-TG443/281020766dad6755",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-SMCA-NLB-TG443-Ext/9b0c3c4923bc9555": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-SMCA-NLB-TG443-Ext/c6c303cca92444e8",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-SMCA-TG443-Int-V2/76f9778c0742de4e": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-SMCA-TG443-Int-V2/429dc5fbba782f5a",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/cadbo-prd-cladju-tg8000/ccad47dadf48529b": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/cadbo-prd-cladju-tg8000/caf43b9096537251"
+    },
+    "tg_source_name_to_target_name": {
+      "CADBO-PRD-DHCS-NLB-TG443-Ext": "CADBO-PRD-DHCS-NLB-TG443-Ext",
+      "CADBO-PRD-DHCS-TG443-Int": "CADBO-PRD-DHCS-TG443-Int",
+      "CADBO-PRD-EIMS-TG443": "CADBO-PRD-EIMS-TG443",
+      "CADBO-PRD-ESST-TG443": "CADBO-PRD-ESST-TG443",
+      "CADBO-PRD-INTF-TG443": "CADBO-PRD-INTF-TG443",
+      "CADBO-PRD-SMCA-NLB-TG443-Ext": "CADBO-PRD-SMCA-NLB-TG443-Ext",
+      "CADBO-PRD-SMCA-TG443-Int-V2": "CADBO-PRD-SMCA-TG443-Int-V2",
+      "cadbo-prd-cladju-tg8000": "cadbo-prd-cladju-tg8000"
+    },
+    "lb_source_to_target_arn": {
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-DHCS-ALB-Int/b60433320b017be1": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-DHCS-ALB-Int/78734a6846ed2e4c",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/net/CADBO-PRD-DHCS-NLB-Ext/d34cab393bcc0800": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/net/CADBO-PRD-DHCS-NLB-Ext/e8bcc8dfd437f9ba",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-EIMS-ALB-Int/9ac9f7fd06ff6bff": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-EIMS-ALB-Int/5cb5a65eac1c0e15",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-ESST-ALB-Int/3c1e446538b3a3a5": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-ESST-ALB-Int/999c40e241e692ab",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-INTF-ALB-Int/bfde28b4cb958dde": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-INTF-ALB-Int/ce104805bd5fb7c3",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-SMCA-ALB-Int/38f9bb3c90a76c04": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-SMCA-ALB-Int/b3163a640765420b",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/cadbo-prd-cladju-alb-int/1176b96c7ca2d7a8": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/cadbo-prd-cladju-alb-int/8b8711397608eca8",
+      "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/net/cadbo-prd-smca-nlb-ext/4a70333f47f5e3f2": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/net/cadbo-prd-smca-nlb-ext/2182783dc4cbc5d6"
+    },
+    "lb_source_name_to_target_name": {
+      "CADBO-PRD-DHCS-ALB-Int": "CADBO-PRD-DHCS-ALB-Int",
+      "CADBO-PRD-DHCS-NLB-Ext": "CADBO-PRD-DHCS-NLB-Ext",
+      "CADBO-PRD-EIMS-ALB-Int": "CADBO-PRD-EIMS-ALB-Int",
+      "CADBO-PRD-ESST-ALB-Int": "CADBO-PRD-ESST-ALB-Int",
+      "CADBO-PRD-INTF-ALB-Int": "CADBO-PRD-INTF-ALB-Int",
+      "CADBO-PRD-SMCA-ALB-Int": "CADBO-PRD-SMCA-ALB-Int",
+      "cadbo-prd-cladju-alb-int": "cadbo-prd-cladju-alb-int",
+      "cadbo-prd-smca-nlb-ext": "cadbo-prd-smca-nlb-ext"
+    },
+    "cert_source_to_target_arn": {
+      "arn:aws:acm:us-west-2:480155374417:certificate/bdc87748-6af7-44fe-912c-c59bbec72e00": "arn:aws:acm:us-east-1:267596997572:certificate/09765326-05b5-47a0-af3c-078ab9e8772b",
+      "arn:aws:acm:us-west-2:480155374417:certificate/6f8670a1-ba26-450f-a1d0-3c270f1bdd82": "arn:aws:acm:us-east-1:267596997572:certificate/6e71cf6d-a3cd-4ac6-bd4e-60c2034638ec",
+      "arn:aws:acm:us-west-2:480155374417:certificate/1ed73117-eb82-4f52-9dfc-3bdaf0131895": "arn:aws:acm:us-east-1:267596997572:certificate/32f75a99-0426-4653-a10f-a57e3ef571fe",
+      "arn:aws:acm:us-west-2:480155374417:certificate/36a16fce-748b-428f-9f06-135e217944b5": "arn:aws:acm:us-east-1:267596997572:certificate/430b7b17-c9d2-4d4d-a4c4-5fa6121cfb38",
+      "arn:aws:acm:us-west-2:480155374417:certificate/e29a56fb-86d6-4ff5-8142-c353f65752c9": "arn:aws:acm:us-east-1:267596997572:certificate/3a2c6032-7a1d-481a-828e-cf29efc8f089"
+    },
+    "ambiguous": [],
+    "unmatched": []
+  },
+  "target_group_results": [
+    {
+      "name": "CADBO-PRD-DHCS-NLB-TG443-Ext",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-DHCS-NLB-TG443-Ext/ea12b0c26a07fe8c",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-DHCS-NLB-TG443-Ext/299b7652f0b45b6e",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "CADBO-PRD-DHCS-TG443-Int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-DHCS-TG443-Int/7a41b7e363307622",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-DHCS-TG443-Int/ba612cb5c45020e5",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "CADBO-PRD-EIMS-TG443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-EIMS-TG443/c42ef1e0be6f64b9",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-EIMS-TG443/2029362ee1747702",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "CADBO-PRD-ESST-TG443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-ESST-TG443/759398575f22eb6b",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-ESST-TG443/374007c210292af7",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "CADBO-PRD-INTF-TG443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-INTF-TG443/c3be9d6230a45810",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-INTF-TG443/281020766dad6755",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "CADBO-PRD-SMCA-NLB-TG443-Ext",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-SMCA-NLB-TG443-Ext/9b0c3c4923bc9555",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-SMCA-NLB-TG443-Ext/c6c303cca92444e8",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "CADBO-PRD-SMCA-TG443-Int-V2",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/CADBO-PRD-SMCA-TG443-Int-V2/76f9778c0742de4e",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/CADBO-PRD-SMCA-TG443-Int-V2/429dc5fbba782f5a",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    },
+    {
+      "name": "cadbo-prd-cladju-tg8000",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:targetgroup/cadbo-prd-cladju-tg8000/ccad47dadf48529b",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:targetgroup/cadbo-prd-cladju-tg8000/caf43b9096537251",
+      "exists": true,
+      "immutable_match": true,
+      "mutable_match": true,
+      "attribute_match": true,
+      "tag_match": true,
+      "association_match": true,
+      "target_registration_status": "SKIPPED_DR_INSTANCES_NOT_RESTORED",
+      "immutable_drift": [],
+      "mutable_drift": [],
+      "attribute_drift": [],
+      "tag_drift": [],
+      "association_notes": [],
+      "action": "SKIP",
+      "notes": [],
+      "in_sync": true,
+      "requires_create": false,
+      "requires_update": false
+    }
+  ],
+  "load_balancer_results": [
+    {
+      "resource_type": "load_balancer",
+      "name": "CADBO-PRD-DHCS-ALB-Int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-DHCS-ALB-Int/b60433320b017be1",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-DHCS-ALB-Int/78734a6846ed2e4c",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "attribute.idle_timeout.timeout_seconds",
+          "source_value": "600",
+          "target_value": "60"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "CADBO-PRD-DHCS-NLB-Ext",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/net/CADBO-PRD-DHCS-NLB-Ext/d34cab393bcc0800",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/net/CADBO-PRD-DHCS-NLB-Ext/e8bcc8dfd437f9ba",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "attribute.load_balancing.cross_zone.enabled",
+          "source_value": "true",
+          "target_value": "false"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "CADBO-PRD-EIMS-ALB-Int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-EIMS-ALB-Int/9ac9f7fd06ff6bff",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-EIMS-ALB-Int/5cb5a65eac1c0e15",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "tag.CostCenter",
+          "source_value": "C.000060.02.03.50.01.01",
+          "target_value": null
+        },
+        {
+          "field": "tag.Owner",
+          "source_value": "DBO-FI",
+          "target_value": null
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "CADBO-PRD-ESST-ALB-Int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-ESST-ALB-Int/3c1e446538b3a3a5",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-ESST-ALB-Int/999c40e241e692ab",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "attribute.routing.http2.enabled",
+          "source_value": "false",
+          "target_value": "true"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "CADBO-PRD-INTF-ALB-Int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-INTF-ALB-Int/bfde28b4cb958dde",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-INTF-ALB-Int/ce104805bd5fb7c3",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "tag.Environment",
+          "source_value": "prd",
+          "target_value": "non-prod"
+        },
+        {
+          "field": "tag.Owner",
+          "source_value": "DBO",
+          "target_value": null
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "CADBO-PRD-SMCA-ALB-Int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/CADBO-PRD-SMCA-ALB-Int/38f9bb3c90a76c04",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/CADBO-PRD-SMCA-ALB-Int/b3163a640765420b",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "tag.Environment",
+          "source_value": "prd",
+          "target_value": null
+        },
+        {
+          "field": "tag.Name",
+          "source_value": "CADBO-PRD-SMCA-ALB-Int",
+          "target_value": null
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "cadbo-prd-cladju-alb-int",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/app/cadbo-prd-cladju-alb-int/1176b96c7ca2d7a8",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/app/cadbo-prd-cladju-alb-int/8b8711397608eca8",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "attribute.idle_timeout.timeout_seconds",
+          "source_value": "600",
+          "target_value": "60"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "load_balancer",
+      "name": "cadbo-prd-smca-nlb-ext",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:loadbalancer/net/cadbo-prd-smca-nlb-ext/4a70333f47f5e3f2",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:loadbalancer/net/cadbo-prd-smca-nlb-ext/2182783dc4cbc5d6",
+      "exists": true,
+      "in_sync": true,
+      "action": "SKIP",
+      "drift": [],
+      "notes": []
+    }
+  ],
+  "listener_results": [
+    {
+      "resource_type": "listener",
+      "name": "HTTPS:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/app/CADBO-PRD-DHCS-ALB-Int/b60433320b017be1/41666c571a8b500e",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/app/CADBO-PRD-DHCS-ALB-Int/78734a6846ed2e4c/b843cf7fc3b3994b",
+      "exists": true,
+      "in_sync": true,
+      "action": "SKIP",
+      "drift": [],
+      "notes": []
+    },
+    {
+      "resource_type": "listener",
+      "name": "HTTPS:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/app/CADBO-PRD-EIMS-ALB-Int/9ac9f7fd06ff6bff/3676d4226294e722",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/app/CADBO-PRD-EIMS-ALB-Int/5cb5a65eac1c0e15/cc771bb02547585f",
+      "exists": true,
+      "in_sync": true,
+      "action": "SKIP",
+      "drift": [],
+      "notes": []
+    },
+    {
+      "resource_type": "listener",
+      "name": "HTTPS:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/app/CADBO-PRD-ESST-ALB-Int/3c1e446538b3a3a5/959f341d46c2cdbe",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/app/CADBO-PRD-ESST-ALB-Int/999c40e241e692ab/95f6b959b60b2be5",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "DefaultActions",
+          "source_value": [
+            {
+              "ForwardConfig": {
+                "TargetGroupStickinessConfig": {
+                  "Enabled": false
+                },
+                "TargetGroups": [
+                  {
+                    "Weight": 1
+                  }
+                ]
+              },
+              "Type": "forward"
+            }
+          ],
+          "target_value": [
+            {
+              "ForwardConfig": {
+                "TargetGroupStickinessConfig": {
+                  "DurationSeconds": 3600,
+                  "Enabled": false
+                },
+                "TargetGroups": [
+                  {
+                    "Weight": 1
+                  }
+                ]
+              },
+              "Type": "forward"
+            }
+          ]
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "listener",
+      "name": "HTTPS:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/app/CADBO-PRD-INTF-ALB-Int/bfde28b4cb958dde/1b9f5393a8942def",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/app/CADBO-PRD-INTF-ALB-Int/ce104805bd5fb7c3/d93b7c5ef6022058",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "DefaultActions",
+          "source_value": [
+            {
+              "ForwardConfig": {
+                "TargetGroupStickinessConfig": {
+                  "Enabled": false
+                },
+                "TargetGroups": [
+                  {
+                    "Weight": 1
+                  }
+                ]
+              },
+              "Type": "forward"
+            }
+          ],
+          "target_value": [
+            {
+              "ForwardConfig": {
+                "TargetGroupStickinessConfig": {
+                  "DurationSeconds": 3600,
+                  "Enabled": false
+                },
+                "TargetGroups": [
+                  {
+                    "Weight": 1
+                  }
+                ]
+              },
+              "Type": "forward"
+            }
+          ]
+        }
+      ],
+      "notes": []
+    },
+    {
+      "resource_type": "listener",
+      "name": "HTTPS:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/app/CADBO-PRD-SMCA-ALB-Int/38f9bb3c90a76c04/9c244e31d8677363",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/app/CADBO-PRD-SMCA-ALB-Int/b3163a640765420b/cb6792da54c20766",
+      "exists": true,
+      "in_sync": false,
+      "action": "MANUAL_REVIEW",
+      "drift": [
+        {
+          "field": "SslPolicy",
+          "source_value": "ELBSecurityPolicy-TLS13-1-2-Res-2021-06",
+          "target_value": "ELBSecurityPolicy-TLS13-1-2-2021-06"
+        }
+      ],
+      "notes": [
+        "No DR ACM certificate match for source cert d0256f43-ba71-4279-ad5a-4136a04d9015"
+      ]
+    },
+    {
+      "resource_type": "listener",
+      "name": "HTTPS:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/app/cadbo-prd-cladju-alb-int/1176b96c7ca2d7a8/01f46b0d577a93ae",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/app/cadbo-prd-cladju-alb-int/8b8711397608eca8/9acb9d037bb790d8",
+      "exists": true,
+      "in_sync": false,
+      "action": "MANUAL_REVIEW",
+      "drift": [
+        {
+          "field": "SslPolicy",
+          "source_value": "ELBSecurityPolicy-TLS13-1-2-2021-06",
+          "target_value": "ELBSecurityPolicy-TLS13-1-2-Res-2021-06"
+        }
+      ],
+      "notes": [
+        "No DR ACM certificate match for source cert b93744c7-2690-44d5-9637-b60b8ce4efe8"
+      ]
+    },
+    {
+      "resource_type": "listener",
+      "name": "TCP:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/net/CADBO-PRD-DHCS-NLB-Ext/d34cab393bcc0800/caeb3244575110b6",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/net/CADBO-PRD-DHCS-NLB-Ext/e8bcc8dfd437f9ba/9be3221e8fe0187a",
+      "exists": true,
+      "in_sync": true,
+      "action": "SKIP",
+      "drift": [],
+      "notes": []
+    },
+    {
+      "resource_type": "listener",
+      "name": "TCP:443",
+      "source_arn": "arn:aws:elasticloadbalancing:us-west-2:480155374417:listener/net/cadbo-prd-smca-nlb-ext/4a70333f47f5e3f2/aff39d8e8de9c166",
+      "target_arn": "arn:aws:elasticloadbalancing:us-east-1:267596997572:listener/net/cadbo-prd-smca-nlb-ext/2182783dc4cbc5d6/03e3ae3719f0ab7d",
+      "exists": true,
+      "in_sync": false,
+      "action": "UPDATE",
+      "drift": [
+        {
+          "field": "DefaultActions",
+          "source_value": [
+            {
+              "ForwardConfig": {
+                "TargetGroupStickinessConfig": {
+                  "Enabled": false
+                },
+                "TargetGroups": [
+                  {}
+                ]
+              },
+              "Type": "forward"
+            }
+          ],
+          "target_value": [
+            {
+              "ForwardConfig": {
+                "TargetGroupStickinessConfig": {
+                  "Enabled": false
+                },
+                "TargetGroups": [
+                  {
+                    "Weight": 1
+                  }
+                ]
+              },
+              "Type": "forward"
+            }
+          ]
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "listener_rule_results": [],
+  "execution": {
+    "created_target_groups": [],
+    "created_load_balancers": [],
+    "created_listeners": [],
+    "created_listener_rules": [],
+    "updated_target_groups": [],
+    "updated_load_balancers": [
+      "CADBO-PRD-DHCS-ALB-Int",
+      "CADBO-PRD-DHCS-NLB-Ext",
+      "CADBO-PRD-EIMS-ALB-Int",
+      "CADBO-PRD-ESST-ALB-Int",
+      "CADBO-PRD-INTF-ALB-Int",
+      "CADBO-PRD-SMCA-ALB-Int",
+      "cadbo-prd-cladju-alb-int"
+    ],
+    "updated_listeners": [
+      "HTTPS:443",
+      "HTTPS:443",
+      "TCP:443"
+    ],
+    "updated_listener_rules": [],
+    "failed_actions": [],
+    "rollback_actions": []
+  },
+  "post_apply_validation": {
+    "enabled": false,
+    "status": "NOT_RUN",
+    "passed": null,
+    "reason": "Post-apply validation only runs after --yes apply mode."
+  }
+}

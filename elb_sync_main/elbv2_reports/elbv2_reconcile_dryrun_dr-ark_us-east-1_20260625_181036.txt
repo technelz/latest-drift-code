@@ -1,0 +1,72 @@
+ELBv2 DR RECONCILIATION – HUMAN READABLE REPORT
+======================================================================
+Created: 2026-06-25T18:10:36.747988+00:00
+
+EXECUTIVE SUMMARY
+----------------------------------------------------------------------
+Target Groups: 26/26 in sync
+Load Balancers: 14/20 in sync
+Listeners: 16/18 in sync
+Manual Review Required: 6
+Ambiguous Matches: 0
+Unmatched Resources: 6
+
+TARGET GROUPS
+----------------------------------------------------------------------
+ALB-ALM-Prod-TG443                       OK
+ALB-MAPIR-Prod-TG-HTTPS443               OK
+ALB-MDP-target-group                     OK
+ALB-MDP-target-group-2                   OK
+ALB-MDP-target-group-3                   OK
+ALB-MDP-target-group-New                 OK
+ALB-PPM-Prod-TG443                       OK
+ALB-Portal-Prod-TG-HTTPS443-New          OK
+ALB-Rlink-Prod-TG443                     OK
+ALB-Web-Svc-Prod-New-TGHTTPS443          OK
+ALB-icUI-Prod-target-group               OK
+AR-FTS-Prod-TG-HTTPS443                  OK
+AR-FTS-Prod-TG-HTTPS9443                 OK
+NLB-ALM-Prod-TG443                       OK
+NLB-FTS-Ext-Prod-TG22                    OK
+NLB-FTS-Ext-Prod-TG443                   OK
+NLB-FTS-Prod-TG-9443a                    OK
+NLB-MDP-TG443                            OK
+NLB-MEUPS-Web-TG-443                     OK
+NLB-PPM-Prod-TG443                       OK
+NLB-Portal-Prod-TG443                    OK
+NLB-Rlink-Prod-TG443                     OK
+NLB-Web-Svc-Prod-TG443                   OK
+NLB-icConn-Prod-TG-HTTPS443              OK
+NLB-icSvcs-Prod-TG443                    OK
+NLB-icUI-PROD                            OK
+
+LOAD BALANCER DRIFT
+----------------------------------------------------------------------
+ALB-ALM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+ALB-PPM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+ALB-Rlink-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+NLB-ALM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+NLB-PPM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+NLB-Rlink-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+
+LISTENER DRIFT
+----------------------------------------------------------------------
+HTTPS:443 – UPDATE
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-Ext-2018-06
+  • DefaultActions: [{'ForwardConfig': {'TargetGroupStickinessConfig': {'DurationSeconds': 3600, 'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}] → [{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+TLS:443 – UPDATE
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-2017-01
+

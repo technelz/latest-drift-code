@@ -1,0 +1,10 @@
+usage: elbv2_reconcile_engine.py [-h] --info-file INFO_FILE
+                                 [--dry-run | --report-only | --yes]
+                                 [--allow-legacy] [--no-create-missing-tg]
+                                 [--no-create-missing-lb] [--no-sync-tags]
+                                 [--no-sync-listener-rules]
+                                 [--skip-target-registration]
+                                 [--report-path REPORT_PATH]
+                                 [--report-dir REPORT_DIR]
+                                 [--rollback-dir ROLLBACK_DIR]
+elbv2_reconcile_engine.py: error: unrecognized arguments: --apply

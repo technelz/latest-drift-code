@@ -1,0 +1,26 @@
+{
+  "source": {
+    "profile": "default",
+    "region": "us-west-2",
+    "vpc_id": "vpc-01702476897c99f76"
+  },
+  "target": {
+    "profile": "dr-ark",
+    "region": "us-east-1",
+    "vpc_id": "vpc-05431353c17b2646f"
+  },
+  "policy": {
+    "register_targets": false,
+    "create_missing_load_balancers": true,
+    "create_missing_target_groups": true,
+    "sync_load_balancer_attributes": true,
+    "sync_target_group_attributes": true,
+    "sync_target_group_settings": true,
+    "sync_listener_rules": true,
+    "sync_listeners": true,
+    "sync_tags": true,
+    "allow_extra_target_rules": true,
+    "skip_target_registration": true,
+    "allow_certificate_domain_match": true
+  }
+}

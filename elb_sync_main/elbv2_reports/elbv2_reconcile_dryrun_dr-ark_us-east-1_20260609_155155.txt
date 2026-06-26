@@ -1,0 +1,166 @@
+ELBv2 DR RECONCILIATION – HUMAN READABLE REPORT
+======================================================================
+Created: 2026-06-09T15:51:55.043106+00:00
+
+EXECUTIVE SUMMARY
+----------------------------------------------------------------------
+Target Groups: 9/26 in sync
+Load Balancers: 3/20 in sync
+Listeners: 8/18 in sync
+Manual Review Required: 16
+Ambiguous Matches: 0
+Unmatched Resources: 14
+
+TARGET GROUPS
+----------------------------------------------------------------------
+ALB-ALM-Prod-TG443                       DRIFT
+ALB-MAPIR-Prod-TG-HTTPS443               DRIFT
+ALB-MDP-target-group                     OK
+ALB-MDP-target-group-2                   DRIFT
+ALB-MDP-target-group-3                   DRIFT
+ALB-MDP-target-group-New                 OK
+ALB-PPM-Prod-TG443                       DRIFT
+ALB-Portal-Prod-TG-HTTPS443-New          DRIFT
+ALB-Rlink-Prod-TG443                     DRIFT
+ALB-Web-Svc-Prod-New-TGHTTPS443          OK
+ALB-icUI-Prod-target-group               DRIFT
+AR-FTS-Prod-TG-HTTPS443                  DRIFT
+AR-FTS-Prod-TG-HTTPS9443                 OK
+NLB-ALM-Prod-TG443                       DRIFT
+NLB-FTS-Ext-Prod-TG22                    DRIFT
+NLB-FTS-Ext-Prod-TG443                   DRIFT
+NLB-FTS-Prod-TG-9443a                    DRIFT
+NLB-MDP-TG443                            OK
+NLB-MEUPS-Web-TG-443                     DRIFT
+NLB-PPM-Prod-TG443                       DRIFT
+NLB-Portal-Prod-TG443                    OK
+NLB-Rlink-Prod-TG443                     DRIFT
+NLB-Web-Svc-Prod-TG443                   OK
+NLB-icConn-Prod-TG-HTTPS443              OK
+NLB-icSvcs-Prod-TG443                    OK
+NLB-icUI-PROD                            DRIFT
+
+LOAD BALANCER DRIFT
+----------------------------------------------------------------------
+ALB-ALM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+ALB-FTS-Prod – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: Prod → None
+  • tag.Name: MoveIT Transfer ALB → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+ALB-MAPIR-Prod – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: prd → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+ALB-PPM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+ALB-Portal-Prod-New – UPDATE
+  • tag.Environment: Prod → prd
+  • tag.Name: Portal Prod ALB → None
+
+ALB-Rlink-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+ALB-icUI-Prod – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: prd → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+NLB-ALM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+NLB-FTS-Ext-PROD – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: Prod → None
+  • tag.Name: MoveIT Transfer NLB → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+NLB-MEUPS-WEB-PROD – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: Prod → None
+  • tag.Name: NLB-MEUPS-WEB-PROD → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+NLB-PPM-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+NLB-Portal-Prod – UPDATE
+  • tag.Name: Portal Prod NLB → None
+
+NLB-Rlink-Prod – MANUAL_REVIEW
+  Note: Missing target load balancer. Automatic LB creation is disabled by default.
+
+NLB-Web-Svc-Prod – UPDATE
+  • tag.Name: Portal Prod Web Svc NLB → None
+
+NLB-icConnections-PROD – UPDATE
+  • tag.CostCenter: USEE500934 → None
+  • tag.Environment: prd → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+NLB-icServices-PROD – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: Prod → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+NLB-icUI-PROD – UPDATE
+  • tag.CostCenter: C.000002.02.13.11.01.01 → None
+  • tag.Environment: prd → None
+  • tag.Owner: carey.chrisco@gainwelltechnologies.com///mike.krekeler@gainwelltechnologies.com → None
+
+
+LISTENER DRIFT
+----------------------------------------------------------------------
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-2017-01
+  Note: No DR ACM certificate match for source certificate 702e0445-9f3e-4911-8d9b-8e723802a56f
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/702e0445-9f3e-4911-8d9b-8e723802a56f
+
+HTTPS:9443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-2017-01
+  Note: No DR ACM certificate match for source certificate 702e0445-9f3e-4911-8d9b-8e723802a56f
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/702e0445-9f3e-4911-8d9b-8e723802a56f
+
+HTTPS:443 – MANUAL_REVIEW
+  Note: No DR ACM certificate match for source certificate 702e0445-9f3e-4911-8d9b-8e723802a56f
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/702e0445-9f3e-4911-8d9b-8e723802a56f
+
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-Ext-2018-06
+  • DefaultActions: [{'ForwardConfig': {'TargetGroupStickinessConfig': {'DurationSeconds': 3600, 'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}] → [{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+  Note: No DR ACM certificate match for source certificate 702e0445-9f3e-4911-8d9b-8e723802a56f
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/702e0445-9f3e-4911-8d9b-8e723802a56f
+
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-Ext-2018-06
+  Note: No DR ACM certificate match for source certificate 702e0445-9f3e-4911-8d9b-8e723802a56f
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/702e0445-9f3e-4911-8d9b-8e723802a56f
+
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-2017-01
+  Note: No DR ACM certificate match for source certificate 702e0445-9f3e-4911-8d9b-8e723802a56f
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/702e0445-9f3e-4911-8d9b-8e723802a56f
+
+HTTPS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-2017-01
+  Note: No DR ACM certificate match for source certificate 7c028544-80c3-422a-8618-2c56d1f9f8f8
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/7c028544-80c3-422a-8618-2c56d1f9f8f8
+
+TLS:443 – MANUAL_REVIEW
+  • SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04 → ELBSecurityPolicy-TLS-1-2-2017-01
+  Note: No DR ACM certificate match for source certificate 7c028544-80c3-422a-8618-2c56d1f9f8f8
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/7c028544-80c3-422a-8618-2c56d1f9f8f8
+
+TLS:443 – MANUAL_REVIEW
+  Note: No DR ACM certificate match for source certificate 7c028544-80c3-422a-8618-2c56d1f9f8f8
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/7c028544-80c3-422a-8618-2c56d1f9f8f8
+
+TLS:443 – MANUAL_REVIEW
+  Note: No DR ACM certificate match for source certificate 7c028544-80c3-422a-8618-2c56d1f9f8f8
+  Note: ARN: arn:aws:acm:us-west-2:343028031702:certificate/7c028544-80c3-422a-8618-2c56d1f9f8f8
+

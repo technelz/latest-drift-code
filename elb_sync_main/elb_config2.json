@@ -1,0 +1,49 @@
+{
+  "source": {
+    "profile": "default",
+    "region": "us-west-2",
+    "vpc_id": "vpc-correct-prod"
+  },
+  "target": {
+    "profile": "dr-ark",
+    "region": "us-east-1",
+    "vpc_id": "vpc-correct-dr"
+  },
+
+  "policy": {
+    "create_missing_load_balancers": true,
+    "create_missing_target_groups": true,
+    "sync_listeners": true,
+    "sync_listener_rules": true,
+    "sync_load_balancer_attributes": true,
+    "sync_target_group_attributes": true,
+    "sync_target_group_settings": true,
+    "sync_tags": true,
+    "allow_extra_target_rules": true,
+    "skip_target_registration": true,
+    "allow_certificate_domain_match": true
+  },
+
+  "mappings": {
+    "subnet_mapping": [
+      { "source_az": "us-west-2a", "target_subnet_id": "subnet-aaa111" },
+      { "source_az": "us-west-2b", "target_subnet_id": "subnet-bbb222" },
+      { "source_az": "us-west-2c", "target_subnet_id": "subnet-ccc333" }
+    ],
+    "security_group_map": [
+      { "source_sg": "sg-src-111", "target_sg": "sg-dst-aaa" },
+      { "source_sg": "sg-src-222", "target_sg": "sg-dst-bbb" }
+    ],
+    "certificate_map": [
+      {
+        "source_certificate_domain": "api.example.com",
+        "target_certificate_arn": "arn:aws:acm:us-east-1:ACCOUNT:certificate/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      }
+    ]
+  },
+
+  "automation": {
+    "auto_create_security_groups": true,
+    "auto_import_certificates": false
+  }
+}
