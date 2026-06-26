@@ -1,0 +1,90 @@
+
+
+====================================================================================================
+ELBV2 DR ROUTING RECONCILIATION REPORT
+====================================================================================================
+target_groups_total                 : 26
+target_groups_in_sync               : 26
+target_groups_create                : 0
+target_groups_update                : 0
+target_groups_manual_review         : 0
+load_balancers_total                : 20
+load_balancers_in_sync              : 14
+listeners_total                     : 18
+listeners_in_sync                   : 16
+listener_rules_total                : 0
+listener_rules_in_sync              : 0
+create_total                        : 6
+update_total                        : 2
+manual_review_total                 : 0
+ambiguous_matches                   : 0
+unmatched_resources                 : 6
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB1
+Action     : CREATE
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB2
+Action     : CREATE
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB3
+Action     : CREATE
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB4
+Action     : CREATE
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB5
+Action     : CREATE
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB6
+Action     : CREATE
+Exists     : False
+Notes:
+  - Missing target load balancer. Automatic LB creation is disabled by default.
+
+----------------------------------------------------------------------------------------------------
+LISTENER: HTTPS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS-1-2-Ext-2018-06'
+  - DefaultActions: source=[{'ForwardConfig': {'TargetGroupStickinessConfig': {'DurationSeconds': 3600, 'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}], target=[{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+----------------------------------------------------------------------------------------------------
+LISTENER: TLS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS-1-2-2017-01'
+====================================================================================================
+
+================ ELBV2 EXECUTION START ================
+[ERROR] Failed LB action for LB1: Ambiguous target subnet match for source subnet subnet-ID on LB1: subnet-abc, subnet-xyz, subnet-1
+[ERROR] Failed LB action for LB2: Ambiguous target subnet match for source subnet subnet-ID on LB2: subnet-abc, subnet-xyz, subnet-1
+[ERROR] Failed LB action for LB3: Ambiguous target subnet match for source subnet subnet-ID on LB3: subnet-abc, subnet-xyz, subnet-1
+[ERROR] Failed LB action for LB4: Ambiguous target subnet match for source subnet subnet-ID on LB$: subnet-abc, subnet-xyz, subnet-1
+[ERROR] Failed LB action for LB5: Ambiguous target subnet match for source subnet subnet-ID on LB5: subnet-abc, subnet-xyz, subnet-1
+[ERROR] Failed LB action for LB6: Ambiguous target subnet match for source subnet subnet-ID on LB6: subnet-abc, subnet-xyz, subnet-1
+[DRY-RUN] Would update listener arn:aws:elasticloadbalancing:us-east-1:dracct:listener/app/name1/asd/dfg
+[DRY-RUN] Would update listener arn:aws:elasticloadbalancing:us-east-1:dracct:listener/net/name2/asd/dfg
+================ ELBV2 EXECUTION COMPLETE ================
