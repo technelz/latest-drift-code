@@ -1,0 +1,123 @@
+# Add imports near top
+import json
+import logging
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
+# Utility to write rollback journal entry
+def record_rollback(rollback_dir, resource_type, resource_id, before_state):
+    ts = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+    fname = f"{rollback_dir}/{resource_type}_{resource_id}_{ts}.json"
+    with open(fname, "w") as f:
+        json.dump({"resource_type": resource_type, "resource_id": resource_id, "before": before_state}, f, indent=2)
+    logger.info("Recorded rollback for %s %s -> %s", resource_type, resource_id, fname)
+
+# Apply LB attribute updates
+def apply_lb_attribute_updates(elbv2_client, lb_arn, desired_attributes, rollback_dir):
+    # read current attributes
+    resp = elbv2_client.describe_load_balancer_attributes(LoadBalancerArn=lb_arn)
+    current = {a['Key']: a['Value'] for a in resp.get('Attributes', [])}
+    # record rollback
+    record_rollback(rollback_dir, "load_balancer", lb_arn.split('/')[-1], current)
+    # build attribute list for modify call
+    attrs = [{'Key': k, 'Value': str(v).lower()} for k, v in desired_attributes.items()]
+    elbv2_client.modify_load_balancer_attributes(LoadBalancerArn=lb_arn, Attributes=attrs)
+    logger.info("Modified LB attributes for %s: %s", lb_arn, desired_attributes)
+
+# Apply listener updates including SslPolicy and DefaultActions
+def apply_listener_update(elbv2_client, listener_arn, desired_ssl_policy=None, desired_default_actions=None, rollback_dir=None):
+    # describe current listener
+    resp = elbv2_client.describe_listeners(ListenerArns=[listener_arn])
+    if not resp['Listeners']:
+        raise RuntimeError("Listener not found " + listener_arn)
+    current = resp['Listeners'][0]
+    # record rollback
+    if rollback_dir:
+        record_rollback(rollback_dir, "listener", listener_arn.split('/')[-1], current)
+    # modify ssl policy if needed
+    if desired_ssl_policy and current.get('SslPolicy') != desired_ssl_policy:
+        elbv2_client.modify_listener(ListenerArn=listener_arn, SslPolicy=desired_ssl_policy)
+        logger.info("Updated SslPolicy for %s -> %s", listener_arn, desired_ssl_policy)
+    # modify default actions if needed
+    if desired_default_actions and current.get('DefaultActions') != desired_default_actions:
+        elbv2_client.modify_listener(ListenerArn=listener_arn, DefaultActions=desired_default_actions)
+        logger.info("Updated DefaultActions for %s", listener_arn)
+
+
+
+
+
+
+
+ELBV2 DR ROUTING RECONCILIATION REPORT
+====================================================================================================
+target_groups_total                 : 26
+target_groups_in_sync               : 26
+target_groups_create                : 0
+target_groups_update                : 0
+target_groups_manual_review         : 0
+load_balancers_total                : 20
+load_balancers_in_sync              : 17
+listeners_total                     : 24
+listeners_in_sync                   : 20
+listener_rules_total                : 0
+listener_rules_in_sync              : 0
+create_total                        : 0
+update_total                        : 7
+manual_review_total                 : 0
+ambiguous_matches                   : 0
+unmatched_resources                 : 0
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: NLB1
+Action     : UPDATE
+Exists     : True
+Drift:
+  - attribute.load_balancing.cross_zone.enabled: source='true', target='false'
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB2
+Action     : UPDATE
+Exists     : True
+Drift:
+  - attribute.load_balancing.cross_zone.enabled: source='true', target='false'
+
+----------------------------------------------------------------------------------------------------
+LOAD_BALANCER: LB3
+Action     : UPDATE
+Exists     : True
+Drift:
+  - attribute.load_balancing.cross_zone.enabled: source='true', target='false'
+
+----------------------------------------------------------------------------------------------------
+LISTENER: HTTPS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS-1-2-Ext-2018-06'
+
+----------------------------------------------------------------------------------------------------
+LISTENER: HTTPS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - DefaultActions: source=[{'FixedResponseConfig': {'ContentType': 'text/plain', 'MessageBody': 'This service is not available.', 'StatusCode': '503'}, 'Type': 'fixed-response'}], target=[{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+----------------------------------------------------------------------------------------------------
+LISTENER: HTTPS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09'
+  - DefaultActions: source=[{'FixedResponseConfig': {'ContentType': 'text/plain', 'MessageBody': 'This service is not available.', 'StatusCode': '503'}, 'Type': 'fixed-response'}], target=[{'ForwardConfig': {'TargetGroupStickinessConfig': {'Enabled': False}, 'TargetGroups': [{'Weight': 1}]}, 'Type': 'forward'}]
+
+----------------------------------------------------------------------------------------------------
+LISTENER: TLS:443
+Action     : UPDATE
+Exists     : True
+Drift:
+  - SslPolicy: source='ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04', target='ELBSecurityPolicy-TLS-1-2-2017-01'
+
+
+This is the latest report after my manual intervention
