@@ -240,6 +240,7 @@ All HTTPS/TLS certificates mapped to DR ACM certs
 No ambiguous subnet mappings
 No unmatched routing dependencies
 
+
 The report must distinguish:
 
 LB object parity
@@ -248,4 +249,299 @@ Rule parity
 Certificate parity
 TG parity
 
+
 Do not report “Load Balancer in sync” as full routing parity unless its listeners and rules are also in sync.
+
+
+This is enough for someone to understand the project, but not enough for someone to finish it to the standard you’re aiming for.
+After working with you on this project from the beginning, there are many things that are not obvious from the code alone. These are architectural decisions we’ve made together over months of iteration. If I were handing this to another senior engineer, I’d include those as “design principles.”
+Here are the most important ones.
+
+1. The philosophy of the project
+This is not a migration tool.
+It is not a cloning tool.
+It is an enterprise reconciliation engine.
+
+that means: 
+Production
+
+↓
+
+Discover
+
+↓
+
+Compare
+
+↓
+
+Detect drift
+
+↓
+
+Safely converge DR toward Production
+
+
+The goal is idempotent convergence, not recreation.
+
+2. Safety is more important than automation
+One principle we’ve followed throughout:
+Never guess.
+For example:
+If subnet mapping is ambiguous
+↓
+Do not create the LB.
+If certificate mapping is ambiguous
+↓
+Do not update the listener.
+If TG mapping is ambiguous
+↓
+Do not modify the listener.
+The engine should always prefer:
+
+Manual Review over possibly incorrect automation  
+
+
+3. Treat AWS as the source of truth
+The engine should not require:
+	• spreadsheets
+	• subnet maps
+	• JSON lookup files
+	• manually maintained subnet IDs
+instead:
+
+DescribeSubnets
+
+DescribeRouteTables
+
+DescribeListeners
+
+DescribeRules
+
+DescribeTargetGroups
+
+
+should provide everything needed.
+The config should contain only:
+
+Environment
+
+Policy
+
+Optional overrides
+
+nothing else.
+
+
+4. Every comparison should be deterministic
+For example:
+Instead of:
+Looks similar,
+ every comparison should explain:
+Matched because
+
+Name
+
+↓
+
+Normalized
+
+↓
+
+Role
+
+↓
+
+AZ
+
+↓
+
+CIDR
+
+↓
+
+Validated
+
+That makes reports explainable.
+
+
+5. Discovery and execution are separate
+One mistake many reconciliation tools make is:
+
+Discover
+
+↓
+
+Immediately modify AWS
+
+I want:
+Discovery
+
+↓
+
+Planner
+
+↓
+
+Validation
+
+↓
+
+Execution
+
+↓
+
+Rediscovery
+
+↓
+
+Verification
+
+Every stage should be independently testable.
+
+
+6. Reports should prove parity
+Today the report says:
+
+LB
+
+In Sync
+That isn’t enough.
+Eventually I want reports like:
+
+
+Portal-ALB
+
+✓ Attributes
+
+✓ Tags
+
+✓ Listeners
+
+✓ Rules
+
+✓ Certificates
+
+✓ Target Groups
+
+
+Now “In Sync” actually means something.
+
+7. Every module should rediscover after modification
+For example
+
+
+Now “In Sync” actually means something.
+
+7. Every module should rediscover after modification
+For example
+Create LB
+↓
+Rediscover
+↓
+Create Listener
+↓
+Rediscover
+↓
+Create Rules
+↓
+Rediscover
+Never assume AWS accepted the previous change.
+
+8. The engine should explain itself
+If something wasn’t updated
+I don’t want:
+
+Skipped
+
+I want;
+Skipped
+
+Reason
+
+No matching TG
+
+or
+
+Subnet ambiguous
+
+or
+
+Certificate missing
+
+or
+
+Priority collision
+
+Every decision should be explainable.
+
+
+Every decision should be explainable.
+
+9. The engine should scale
+Today you have
+20 LBs
+Tomorrow you might have
+200
+Nothing should assume:
+	• only two AZs
+	• only three subnets
+	• only one listener
+	• one TG
+Everything should be data-driven.
+
+10. The final script should still be one file
+This is the biggest thing I’d tell another engineer.
+During development:
+
+subnet_resolver.py
+
+listener_rules.py
+
+planner.py
+
+is absolutely the right way.
+But the final deliverable should still be
+
+elbv2_reconcile_engine.py
+
+
+because that’s how you want to operate it.
+That preference has been consistent throughout the project.
+
+One thing I would add to the handoff
+If I were writing this for another senior engineer, I’d also include a “Definition of Done.”
+
+
+
+The project is complete only when:
+
+✓ Missing LBs can be auto-created without subnet IDs in config.
+
+✓ Existing LBs are fully reconciled.
+
+✓ Listener discovery equals AWS.
+
+✓ Rule discovery equals AWS.
+
+✓ Rule priorities match.
+
+✓ Conditions match.
+
+✓ Actions match.
+
+✓ TG ARNs are remapped.
+
+✓ Certificates are remapped.
+
+✓ Reports explain every decision.
+
+✓ A second execution produces zero drift.
+
+✓ The final deliverable is a single Python script.
+
+
+My assessment
+At this point, I think we’re about 80–85% complete.
+The remaining 15–20% is the most technically challenging part, but it’s also the most rewarding because it’s where the engine moves from “works in many cases” to “enterprise-grade and trustworthy.”
+The encouraging part is that we’ve already solved most of the hard foundational problems: live cross-account discovery, reconciliation planning, target group parity, reporting, rollback concepts, and safe execution modes. What’s left is concentrated in two subsystems—deterministic subnet resolution and complete listener/rule reconciliation—which means the path to completion is now much clearer than it was when we started.
