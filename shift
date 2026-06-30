@@ -1,0 +1,251 @@
+Copilot Project Handoff: AWS ELBv2 Prod-to-DR Reconciliation Engine
+We are building an enterprise AWS ELBv2 reconciliation engine that compares Production and DR across separate AWS accounts/regions and synchronizes the application delivery layer.
+The end goal is one unified Python script, but we are currently debugging/refactoring one subsystem at a time.
+Current architecture
+Production and DR are separate AWS accounts and different regions.
+The engine must compare:
+Prod → DR
+
+ALB / NLB
+Target Groups
+Listeners
+Listener default actions
+Listener rules
+Rule priorities
+Rule conditions
+Certificates
+LB attributes
+TG attributes
+Tags
+
+It must not register backend targets. Target registration is intentionally skipped because DR compute targets are handled separately through DRS/manual recovery.
+What already works
+The previous script successfully handles:
+Target group discovery
+Target group matching
+Target group sync
+TG attributes
+TG health check settings
+TG tags
+Certificate domain matching
+Load balancer matching when DR LB already exists
+Basic listener matching
+Report generation
+Dry-run/report-only modes
+Rollback metadata framework
+
+In one run, target groups showed:
+26/26 target groups in sync
+
+
+So the TG logic should be preserved, not rewritten from scratch.
+Main blockers
+Blocker 1 — Missing LB auto-creation
+The script initially detected missing DR load balancers but did not create them. That was because the execution path logged manual review instead of calling a real create_load_balancer() function.
+Later versions added LB creation, but subnet mapping blocked it.
+The current blocker is subnet resolution.
+The DR VPC has multiple private /23 subnets that look identical by generic metadata:
+
+private = false/true match
+CIDR mask = /23
+available IPs ok
+multiple candidates with same score
+
+So the script fails safely because it cannot choose a DR subnet confidently.
+Required subnet resolver behavior
+Do not hardcode subnet IDs in config.
+The resolver must use normalized subnet Name tags as the primary mapping signal.
+
+eg:
+Production:
+Prod-App-Private-A
+Prod-App-Private-B
+
+DR:
+DR-App-Private-A
+DR-App-Private-B
+
+Normalize both by removing environment tokens:
+
+Prod-App-Private-A → app-private-a
+DR-App-Private-A   → app-private-a
+
+Resolution order should be:
+
+1. Explicit mapping if provided
+2. Normalized Name tag match
+3. Role tag match if available
+4. Public/private route behavior validation
+5. CIDR mask validation
+6. AZ/ordinal fallback
+7. Scoring fallback
+8. Manual review if still ambiguous
+
+
+
+The config should allow mapping overrides, but not require them.
+Blocker 2 — Listener rules not proving parity
+The report currently shows:
+
+listener_rules_total: 0
+
+That is suspicious. It may mean:
+
+Rules are not being discovered
+Rules are being discovered but filtered out
+Rules are not associated with matched listeners
+Only default rules are being counted
+
+
+This must be fixed before trusting “in sync.”
+The engine needs a debug discovery mode that prints:
+
+LB name
+Listener protocol/port
+Source rules discovered
+Target rules discovered
+Default rule yes/no
+Non-default rule count
+Rule priorities
+Conditions
+Actions
+
+Real parity means:
+
+LB → Listener → Default Action → Rules → Priorities → Conditions → Actions → TGs
+
+
+Not just “LB object exists.”
+Required config direction
+Use this structure:
+
+{
+  "source": {
+    "profile": "prod",
+    "region": "us-west-2",
+    "vpc_id": "vpc-prod"
+  },
+  "target": {
+    "profile": "dr",
+    "region": "us-east-1",
+    "vpc_id": "vpc-dr"
+  },
+  "mappings": {
+    "subnet_mapping": {},
+    "security_group_map": {},
+    "certificate_map": {},
+    "load_balancer_map": {},
+    "target_group_map": {}
+  },
+  "policy": {
+    "register_targets": false,
+    "skip_target_registration": true,
+    "create_missing_load_balancers": true,
+    "create_missing_target_groups": true,
+    "sync_load_balancer_attributes": true,
+    "sync_target_group_attributes": true,
+    "sync_target_group_settings": true,
+    "sync_listeners": true,
+    "sync_listener_rules": true,
+    "sync_tags": true,
+    "allow_extra_target_rules": true,
+    "allow_certificate_domain_match": true,
+    "auto_map_subnets": true,
+    "auto_map_security_groups": true
+  },
+  "execution": {
+    "auto_apply_updates": false,
+    "auto_update_ssl_policies": true,
+    "auto_update_listener_actions": true,
+    "auto_update_lb_attributes": true,
+    "fail_on_ambiguous_match": true,
+    "fail_on_unmatched_resource": false
+  },
+  "subnet_resolution": {
+    "selection_policy": "explicit_then_name_then_tag_then_az_then_score",
+    "primary_name_tag": "Name",
+    "normalize_environment_tokens": [
+      "prod",
+      "production",
+      "prd",
+      "dr",
+      "disaster",
+      "recovery"
+    ],
+    "role_tag_keys": [
+      "SubnetRole",
+      "DRSubnetRole",
+      "Tier",
+      "NetworkTier",
+      "Application"
+    ],
+    "validate_public_private_match": true,
+    "validate_cidr_mask_match": true,
+    "minimum_score": 60,
+    "minimum_tie_margin": 15
+  },
+  "automation": {
+    "rollback_dir": "./rollback",
+    "auto_create_security_groups": false,
+    "auto_import_certificates": false
+  },
+  "logging": {
+    "log_level": "INFO",
+    "report_dir": "./elbv2_reports",
+    "debug_discovery": true
+  }
+}
+
+
+
+What Copilot should do next
+First, fix config parsing so unknown or new fields do not crash the script.
+Then implement these in order:
+
+
+1. Discovery-only mode
+2. Listener rule discovery debug output
+3. Name-tag-first subnet resolver
+4. Load balancer creation using resolved DR subnets
+5. Listener creation/update
+6. Listener rule create/update
+7. Post-apply validation
+8. Final unified single-file script
+
+
+Do not run destructive operations.
+Do not delete extra resources.
+Do not register/deregister targets.
+Do not modify Route 53.
+Do not import certificates automatically.
+Everything should be safe by default:
+
+
+--report-only
+--dry-run
+--yes only when explicitly requested
+
+Success criteria
+The final engine succeeds when a dry-run can prove:
+
+
+All source LBs matched or planned for creation
+All source TGs matched/created
+All listeners matched/created/updated
+All listener rules discovered
+All listener rule priorities compared
+All listener rule conditions compared
+All listener actions remapped to DR TG ARNs
+All HTTPS/TLS certificates mapped to DR ACM certs
+No ambiguous subnet mappings
+No unmatched routing dependencies
+
+The report must distinguish:
+
+LB object parity
+Listener parity
+Rule parity
+Certificate parity
+TG parity
+
+Do not report “Load Balancer in sync” as full routing parity unless its listeners and rules are also in sync.
